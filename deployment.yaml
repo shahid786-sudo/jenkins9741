@@ -14,7 +14,7 @@ spec:
       containers:
         - name: jenkins-ci
           imagePullPolicy: Always
-          image: shahid9741/jenkins-ci:latest
+          image: shahid9741/jenkins:latest
           ports:
             - containerPort: 8080
             - containerPort: 50000
