@@ -1,54 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins-ci
+  name: jenkins-deployment
 spec:
   replicas: 1
   selector:
-    matchLables:
-      name: jenkins-ci
+    matchLabels:
+      app: jenkins
   template:
     metadata:
       labels:
-        name: jenkins-ci
+        app: jenkins
     spec:
       containers:
-        - name: jenkins-ci
-          imagePullPolicy: Always
-          image: shahid9741/jenkins:latest
-          ports:
-            - containerPort: 8080
-            - containerPort: 50000
-          readinessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 40
-            periodSeconds: 20
-          volumeMounts:
-            - mountPath: /var/run
-              name: docker-sock
-            - mountPath: /var/jenkins_home
-              name: jenkins-home
+      - name: jenkins
+        image: shahid9741/jenkins:latest 
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+volumeMounts:
+          - name: jenkins-home
+            mountPath: /var/jenkins_home
       volumes:
-        - name: docker-sock
-          hostPath:
-            path: /var/run
         - name: jenkins-home
-          hostPath:
-            path: /var/jenkins_home
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins-ci-lb
+  name: jenkins
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
-    - name: jenkins
-      port: 8080
+    - port: 8080
       targetPort: 8080
-    - name: jenkins-agent
-      port: 50000
-      targetPOrt: 50000
+      nodePort: 44000
   selector:
-    name: jenkins-ci
+    app: jenkins
