@@ -9,8 +9,6 @@ spec:
       labels:
         name: jenkins-ci
     spec:
-      imagePullSecrets:
-        - name: regsecret
       containers:
         - name: jenkins-ci
           imagePullPolicy: Always
@@ -23,8 +21,6 @@ spec:
               port: 8080
             initialDelaySeconds: 40
             periodSeconds: 20
-          securityContext:
-            priviledge: true
           volumeMounts:
             - mountPath: /var/run
               name: docker-sock
@@ -53,5 +49,3 @@ spec:
       targetPOrt: 50000
   selector:
     name: jenkins-ci
-
-
