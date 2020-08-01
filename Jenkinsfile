@@ -33,8 +33,13 @@ pipeline {
         sshagent(['Demo-machine']){
           sh 'ssh -vvv -o StrictHostKeyChecking=no -T shahid@192.168.0.7'
           sh 'scp -r deployment.yaml shahid@192.168.0.7:/home/shahid'
-          sh 'cd $HOME'
-          sh 'sudo kubectl create -f deployment.yaml'
+          sh '''
+              #!/bin/bash
+              echo "logging into to kubernetes cluster server"
+              ssh -vvv -o StrictHostKeyChecking=no -T shahid@192.168.0.7
+              cd $HOME
+              kubectl create -f deployment.yaml
+          '''
           }
         }
       }
