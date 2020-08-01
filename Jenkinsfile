@@ -33,7 +33,7 @@ pipeline {
         sshagent(['Demo-machine']){
           sh 'ssh -vvv -o StrictHostKeyChecking=no -T shahid@192.168.0.7'
           sh 'scp -r deployment.yaml shahid@192.168.0.7:/home/shahid'
-          sh 'ssh -vvv -o StrictHostKeyChecking=no -T shahid@192.168.0.7 kubectl create -f deployment.yaml'
+          sh 'ssh shahid@192.168.0.7 kubectl create -f deployment.yaml'
           }
         }
       }
