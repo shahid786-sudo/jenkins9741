@@ -4,6 +4,9 @@ metadata:
   name: jenkins-ci
 spec:
   replicas: 1
+  selector:
+    matchLables:
+      name: jenkins-ci
   template:
     metadata:
       labels:
