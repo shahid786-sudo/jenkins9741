@@ -32,8 +32,8 @@ pipeline {
       steps {
         sshagent(['Demo-machine']){
           sh 'ssh -vvv -o StrictHostKeyChecking=no -T shahid@192.168.0.7'
-          sh 'sudo scp -r deployment.yaml shahid@192.168.0.7:/home/shahid'
-          sh 'sudo chown shahid:shahid deployment.yaml'
+          sh 'scp -r deployment.yaml shahid@192.168.0.7:/home/shahid'
+          sh 'chown shahid:shahid deployment.yaml'
           sh 'cd $HOME'
           sh 'sudo kubectl create -f deployment.yaml'
           }
