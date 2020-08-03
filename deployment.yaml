@@ -24,7 +24,7 @@ spec:
             - matchExpressions:
               - key: size
                 operator: In
-                value:
+                values:
                 - large
 ---
 apiVersion: v1
