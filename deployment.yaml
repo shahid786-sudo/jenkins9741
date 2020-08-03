@@ -22,9 +22,9 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: large
+              - key: size
                 operator: In
-                values:
+                value:
                 - large
 ---
 apiVersion: v1
