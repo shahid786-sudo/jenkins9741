@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins-deployment
+  name: jenkins
 spec:
   replicas: 1
   selector:
@@ -14,10 +14,16 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: shahid9741/jenkins:latest 
+        image: shahid9741/jenkins:latest
         ports:
         - containerPort: 8080
-        - containerPort: 50000
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: large
+                operatpr: Exists
 ---
 apiVersion: v1
 kind: Service
@@ -27,7 +33,7 @@ spec:
   type: NodePort
   ports:
     - port: 8080
-      targetPort: 8080
-      nodePort: 44000
+      targetPort: 80
+      nodePort: 30036
   selector:
     app: jenkins
