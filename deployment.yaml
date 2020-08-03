@@ -23,7 +23,7 @@ spec:
             nodeSelectorTerms:
             - matchExpressions:
               - key: large
-                operatpr: Exists
+                operator: Exists
 ---
 apiVersion: v1
 kind: Service
